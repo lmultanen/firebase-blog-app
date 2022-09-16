@@ -36,19 +36,23 @@ const CreatePost = ({isAuth}) => {
         navigate('/')
     }
 
+    const checkDisabled = () => {
+        return !post.title.length || !post.content.length
+    }
+
     return(
         <div className="create-post-page">
             <form>
-                <h1>Create New Post</h1>
+                <h1 className="create-post-header">New Post</h1>
                 <div className="input-group">
-                    <label> Title: </label>
+                    <label className="create-post-label"> Title: </label>
                     <input placeholder="Title..." onChange={changeHandler('title')}/>
                 </div>
                 <div className="input-group">
-                    <label> Content: </label>
+                    <label className="create-post-label"> Content: </label>
                     <textarea placeholder="Content..." onChange={changeHandler('content')}/>
                 </div>
-                <button onClick={createPost}>Submit Post</button>
+                <button onClick={createPost} className='submit-button' disabled={checkDisabled()}>Submit Post</button>
             </form>
         </div>
     )

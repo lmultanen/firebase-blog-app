@@ -36,17 +36,17 @@ const EditPost = ({ isAuth }) => {
 
     return(
         <div className="edit-post-page">
-            <div className="post-container">
-                <h1>Update Post</h1>
+            <div className="edit-post-container">
+                <h1 className="edit-post-header">Update Post</h1>
                 <div className="input-group">
-                    <label> Title: </label>
+                    <label className="edit-post-label"> Title: </label>
                     <input value={title} onChange={(e)=>setTitle(e.target.value)}/>
                 </div>
                 <div className="input-group">
-                    <label> Content: </label>
+                    <label className="edit-post-label"> Content: </label>
                     <textarea value={content} onChange={(e)=>setContent(e.target.value)}/>
                 </div>
-                {/* <button onClick={createPost}>Submit Post</button> */}
+
                 <div>
                     <button onClick={() => navigate(`/posts/${params.id}`)}>Discard Changes</button>
                     <button onClick={() => saveChanges()}>Save Changes</button>

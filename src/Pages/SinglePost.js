@@ -49,17 +49,12 @@ const SinglePost = ({ isAuth }) => {
         const commentDoc = doc(db, 'comments', id);
         await deleteDoc(commentDoc)
         loadComments()
-        // maybe could make a new comment object or something that says:
-        // 'comment deleted by user/author'
-        // but not necessary
     }
     const deletePost = async () => {
         let commentsCopy = [...commentsList];
         while (commentsCopy.length) {
             await deleteComment(commentsCopy.pop().id)
         }
-        console.log('past deleteing comments')
-        console.log('logging post id', params.id)
         const postDoc = doc(db, 'blogposts',params.id)
         await deleteDoc(postDoc)
         navigate('/')
@@ -69,9 +64,8 @@ const SinglePost = ({ isAuth }) => {
     return( post.title ?
         <div className="single-post">
             <div className="single-post-details">
-                <h1>{post.title}</h1>
-                <div>{`by @${post.author.name}`}</div>
-                <p>{post.content}</p>
+                <h1 className="single-post-title">{post.title}</h1>
+                <div className="by-author">{`by @${post.author.name}`}</div>
                 {isAuth && auth.currentUser.uid === post.author.id ?
                     <div className="edit-delete-buttons">
                         <button className="edit-post" onClick={() => navigate(`/posts/edit/${params.id}`)}>
@@ -83,18 +77,19 @@ const SinglePost = ({ isAuth }) => {
                     </div>
                     : <></>
                 }
+                <p className="single-post-content">{post.content}</p>
             </div>
             <div className="single-post-comments">
-                Comments:
+                <span className="comments-header">Comments:</span>
                 {commentsList.map((comment,idx) => {
                     return(
                         <div className="displayed-comment" key={idx}>
                             <p className="comment-content">{comment.comment}</p>
-                            <div className="comment-author">{`@${comment.author.name}`}</div>
+                            <div className="comment-author">{`-@${comment.author.name}`}
                             {isAuth && (auth.currentUser.uid === comment.author.id || auth.currentUser.uid === post.author.id) ?
                                 <button onClick={()=>deleteComment(comment.id)}>X</button>
                                 : <></>
-                            }
+                            }</div>
                         </div>
                     )
                 })}
@@ -112,8 +107,3 @@ const SinglePost = ({ isAuth }) => {
 }
 
 export default SinglePost;
-
-// todos:
-// -- make ability to edit post on single post page if logged in and same id as post author
-
-// after that, can look into adding ability to see author pages, but maybe not completely necessary

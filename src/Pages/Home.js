@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../firebase-config";
@@ -17,25 +17,13 @@ const Home = () => {
         getPosts();
     },[])
 
-    // const deletePost = async (id) => {
-    //     const postDoc = doc(db, 'blogposts',id)
-    //     await deleteDoc(postDoc)
-    //     window.location.reload()
-    // }
-
     return(
         <div className="home-page">
             {postsList.map((post, idx) => {
                 return(
                     <div className="post-display" key={idx}>
-                        <div><h1><Link to={`/posts/${post.id}`} className='post-link'>{post.title}</Link></h1><span> by @{post.author.name}</span></div>
-                        {/* <div className="delete-post">
-                            {isAuth && post.author.id === auth.currentUser.uid ?
-                                <button onClick={() => deletePost(post.id)}> X </button>
-                                : <></>
-                            }
-                        </div> */}
-                        <p>{post.content}</p>
+                        <div className="post-header"><h1><Link to={`/posts/${post.id}`} className='post-link'>{post.title}</Link></h1><span className="by-author"> by @{post.author.name}</span></div>
+                        <p className="post-content">{post.content}</p>
                     </div>
                 )
             })}
