@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route, Link, useNavigate} from 'react-router-dom'
+import {Routes, Route, Link, useNavigate, Navigate} from 'react-router-dom'
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import CreatePost from './Pages/CreatePost';
@@ -43,6 +43,7 @@ function App() {
         <Route path='/createpost' element={<CreatePost isAuth={isAuth}/>}/>
         <Route path='/posts/:id' element={<SinglePost isAuth={isAuth}/>}/>
         <Route path='/posts/edit/:id' element={<EditPost isAuth={isAuth}/>}/>
+        <Route path='*' element={<Navigate to='/'/>}/>
       </Routes>
     </div>
   );
